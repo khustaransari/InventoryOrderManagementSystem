@@ -27,6 +27,10 @@ export default function Customers() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (form.phone.length !== 10) {
+      setAlert({ type: "error", message: "Phone number must be exactly 10 digits." });
+      return;
+    }
     setSubmitting(true);
     try {
       await createCustomer(form);
