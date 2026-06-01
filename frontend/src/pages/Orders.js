@@ -58,12 +58,12 @@ export default function Orders() {
         items: form.items.map((it) => ({ product_id: parseInt(it.product_id, 10), quantity: parseInt(it.quantity, 10) })),
       });
       setAlert({ type: "success", message: "Order created." });
-      closeModal();
       load();
     } catch (err) {
       setAlert({ type: "error", message: err.response?.data?.detail || "Failed to create order" });
     } finally {
       setSubmitting(false);
+      closeModal();
     }
   };
 

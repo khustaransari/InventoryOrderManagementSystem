@@ -31,12 +31,12 @@ export default function Customers() {
     try {
       await createCustomer(form);
       setAlert({ type: "success", message: "Customer created." });
-      closeModal();
       load();
     } catch (err) {
       setAlert({ type: "error", message: err.response?.data?.detail || "Failed to create customer" });
     } finally {
       setSubmitting(false);
+      closeModal();
     }
   };
 
@@ -106,8 +106,8 @@ export default function Customers() {
                 <input className="form-control" type="email" required value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
               </div>
               <div className="form-group">
-                <label>Phone *</label>
-                <input className="form-control" required value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} />
+                <label>Phone * (10 digits)</label>
+                <input className="form-control" required pattern="\d{10}" maxLength={10} inputMode="numeric" placeholder="e.g. 9876543210" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value.replace(/\D/g, "").slice(0, 10) })} />
               </div>
               <div className="form-actions">
                 <button type="button" className="btn btn-secondary" onClick={closeModal}>Cancel</button>

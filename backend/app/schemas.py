@@ -65,6 +65,14 @@ class CustomerBase(BaseModel):
     email: str
     phone: str
 
+    @field_validator("phone")
+    @classmethod
+    def phone_must_be_10_digits(cls, v):
+        digits = "".join(c for c in v if c.isdigit())
+        if len(digits) != 10:
+            raise ValueError("Phone number must be exactly 10 digits")
+        return digits
+
 
 class CustomerCreate(CustomerBase):
     pass
